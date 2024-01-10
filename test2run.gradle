@@ -1,34 +1,9 @@
 import groovy.json.JsonSlurper
 
 
-static Set<String> suggestedTests() {
+Set<String> suggestedTests() {
     println('suggestedTests...');
-    def token = ""
-    try {
-        final String loginUrl = "http://localhost:8090/api/sign-in"
-        def baseUrl = new URL(loginUrl)
-        def payload = [
-            username: "user",
-            password: "user"
-        ]
-        String response = ""
-        HttpURLConnection connection = (HttpURLConnection) baseUrl.openConnection();
-        connection.addRequestProperty("Content-Type", "application/json; charset=UTF-8")
-        connection.with {
-            doOutput = true
-            requestMethod = 'POST'
-            outputStream.withWriter { writer ->
-                writer << new groovy.json.JsonBuilder(payload)
-            }
-            response = content.text
-        }
-
-        def parseJson = new JsonSlurper().parseText(response)
-        token = "Bearer " + parseJson.data.token
-    } catch (Exception ex) {
-        println('Failed to obtain authorization token from Drill4J Admin Backend API');
-        ex.printStackTrace()
-    }
+    def apiKey = ext.API_KEY
 
     Set<String> test2run = []
     try {
@@ -38,7 +13,7 @@ static Set<String> suggestedTests() {
         HttpURLConnection connection = (HttpURLConnection) baseUrl.openConnection();
         connection.addRequestProperty("Accept", "application/json")
         connection.addRequestProperty("Content-Type", "application/json")
-        connection.addRequestProperty("Authorization", token)
+        connection.addRequestProperty("X-Api-Key", apiKey as String)
         connection.with {
             doOutput = true
             requestMethod = 'GET'
