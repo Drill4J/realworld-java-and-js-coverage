@@ -19,6 +19,7 @@ services:
     image: ghcr.io/drill4j/admin:${BACK_VERSION}
     environment:
       - DRILL_DB_PORT=5432
+      - DRILL_JS_COVERAGE_CONVERTER_ADDRESS=http://js-agent:8092
       - DRILL_AGENTS_SOCKET_TIMEOUT=6000
       - DRILL_DB_HOST=${POSTGRES_HOST}
       - DRILL_DB_NAME=${POSTGRES_DB}
@@ -65,11 +66,8 @@ services:
       APP_PORT: '8092'
       PERF_MEASUREMENT_ENABLED: 'true'
       PERF_DIFFS_ENABLED: 'true'
-      WAIT_HOSTS: drill-admin:8090
-      DRILL_ADMIN_HOST: 'drill-admin:8090'
-      DRILL_ADMIN_IS_SECURE_CONNECTION: 'false'
-      DRILL_ADMIN_USERNAME: 'user'
-      DRILL_ADMIN_PASSWORD: 'user'
+      DRILL_ADMIN_ADDRESS: "${DRILL_ADMIN_ADDRESS}"
+      DRILL_API_KEY: "${DRILL_API_KEY}"
       DEBUG: 'drill:*'
       DEBUG_COLORS: 'true'
       FORCE_COLOR: '3'
@@ -90,7 +88,7 @@ services:
       DEBUG: 'drill:*'
       DEBUG_COLORS: 'true'
       FORCE_COLOR: '3'
-      DEBUG_LOG_LEVEL: '2'
+      DEBUG_LOG_LEVEL: '4'
     extra_hosts:
       - "host.docker.internal:host-gateway"
 

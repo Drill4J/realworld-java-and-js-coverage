@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'com.epam.drill.autotest.runner'  version '0.22.5'
+    id 'com.epam.drill.autotest.runner'  version '0.22.7'
 }
 
 group 'com.epam'
@@ -24,12 +24,18 @@ allprojects {
     }
 
     drill {
-        version = "0.22.5"
+        version = "0.22.7"
         adminHost = "localhost"
+        jsAgentId = "angular-realworld-frontend"
+        jsAgentBuildVersion = "0.1.0"
         groupId = "realworld-app"
         adminPort = 8090
-        adminUserName = "user"
-        adminPassword = "user"
+
+        // TODO create user & api key on launch script
+        apiKey = "2_d05737698ce0c18de0db2954633ffae148c7abecc55e1fde82a37260a0f371ed"
+        
+        // TODO remove that
+        directLocalPathToZip = "F:/epm_backup/epm/Drill/autotest-agent/autotest-agent/build/distributions/mingwX64-0.22.7.zip"
         additionalParams = [
                 "devToolsProxyAddress": "localhost:8093",
                 "withJsCoverage": true,

@@ -8,3 +8,9 @@ out/
 build/
 /chromium-binary/
 /chrome-driver/
+
+### Docker ###
+/docker/data
+
+### Misc ###
+*.log

@@ -15,7 +15,7 @@ services:
       - "${REALWORLD_API_PORT}:8080"
     environment:
       - "ACCESS_CONTROL_ALLOW_ORIGIN=http://localhost:8080"
-      - "JAVA_TOOL_OPTIONS=-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${DRILL_ADMIN_ADDRESS},agentId=${DRILL_API_AGENT_ID},groupId=${DRILL_GROUP_ID},buildVersion=0.2.0,logLevel=INFO,packagePrefixes=io/spring"
+      - "JAVA_TOOL_OPTIONS=-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${DRILL_ADMIN_ADDRESS},apiKey=${DRILL_API_KEY},agentId=${DRILL_API_AGENT_ID},groupId=${DRILL_GROUP_ID},buildVersion=0.2.0,packagePrefixes=io/spring"
     depends_on:
       - db
     volumes:
@@ -29,7 +29,7 @@ services:
     environment:
       - "MYSQL_ALLOW_EMPTY_PASSWORD=true"
     ports:
-      - "3306:3306"
+      - "4306:3306" # // changing outside port just to allow deployment - services communicate using internal port anyway
 
 volumes:
   agent-files:
