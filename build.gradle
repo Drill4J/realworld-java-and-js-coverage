@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id("com.epam.drill.integration.cicd") version "0.1.7"
+    id("com.epam.drill.integration.cicd") version "0.1.15"
 }
 
 group 'com.epam'
@@ -28,7 +28,7 @@ allprojects {
         appId = "backend"
         packagePrefixes = ["com/realworld/springmongo"]
         enableTestAgent {
-            version="0.23.4"
+            version="0.23.11"
             logLevel = "TRACE"
             logFile = "./drill-log.log"
             additionalParams = [
