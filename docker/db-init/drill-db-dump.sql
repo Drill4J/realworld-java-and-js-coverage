@@ -160,7 +160,7 @@ ALTER TABLE ONLY auth."user" ALTER COLUMN id SET DEFAULT nextval('auth.user_id_s
 --
 
 COPY auth.api_key (id, user_id, description, api_key_hash, expires_at, created_at) FROM stdin;
-1	1	agent api key	$2a$10$AkaGei6.bIUOLVGfFGrE5.8RF2YQTqKW0KSvxBq2noEllpL4JMavK	2025-08-21 13:25:32.810114	2024-08-21 13:25:32.810144
+1	1	agent api key	$2a$10$kZrQlCvy2QrteR.eWFGlK.dGwMjRiGsYjJHB0Hz/j7vBGDt2aXVBy	2027-06-18 12:43:09.275274	2026-06-18 12:43:09.275296
 \.
 
 

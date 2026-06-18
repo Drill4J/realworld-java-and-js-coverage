@@ -13,7 +13,7 @@ services:
   drill-admin:
     image: ghcr.io/drill4j/admin:${DRILL_ADMIN_BACKEND_VERSION}
     environment:
-      - DRILL_METRICS_UI_BASE_URL=${DRILL_UI_BASE_URL}
+      - DRILL_METRICS_UI_BASE_URL=${DRILL_METRICS_UI_BASE_URL}
       - DRILL_DB_PORT=5432
       - DRILL_AGENTS_SOCKET_TIMEOUT=6000
       - DRILL_DB_HOST=${POSTGRES_HOST}
@@ -93,10 +93,15 @@ services:
     image: ghcr.io/drill4j/drill-metabase-dashboards:${DRILL_METABASE_DASHBOARDS_VERSION}
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_DB: ${METABASE_POSTGRES_DB}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_SSL: 'false'
+      METABASE_DB_NAME: ${METABASE_POSTGRES_DB}
+      DRILL_METRICS_DB_NAME: ${POSTGRES_DB}
+      DRILL_UI_BASE_URL: ${DRILL_UI_BASE_URL}
+      DRILL_METRICS_UI_BASE_URL: ${DRILL_METRICS_UI_BASE_URL}
     depends_on:
           postgres:
             condition: service_healthy

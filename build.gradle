@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id("com.epam.drill.integration.cicd") version "0.1.15"
+    id("com.epam.drill.integration.cicd") version "0.10.1"
 }
 
 group 'com.epam'
@@ -23,19 +23,36 @@ allprojects {
         implementation 'org.slf4j:slf4j-simple:1.7.32'
     }
 
+        
     drill {
+        agent {
+            version = "0.10.3"
+            agentMode = "JAVA"
+            logLevel = "DEBUG"
+        }
+
         groupId = "realworld"
         appId = "backend"
-        packagePrefixes = ["com/realworld/springmongo"]
-        enableTestAgent {
-            version="0.23.11"
-            logLevel = "TRACE"
-            logFile = "./drill-log.log"
-            additionalParams = [
-                "devToolsProxyAddress": "http://localhost:8093",
-                "withJsCoverage": "false",
-                "devtoolsAddressReplaceLocalhost": "host.docker.internal",
-            ]
+        buildVersion = project.version
+        
+        packagePrefixes = [
+            "com/realworld/springmongo",
+        ]
+
+        coverage {
+            enabled = true
         }
+
+        testTracing {
+            enabled = true
+            perTestSession = true
+            perTestLaunch = true
+        }
+
+        additionalParams = [
+            "devToolsProxyAddress": "http://localhost:8093",
+            "devtoolsAddressReplaceLocalhost": "host.docker.internal",
+        ]
     }
+
 }
