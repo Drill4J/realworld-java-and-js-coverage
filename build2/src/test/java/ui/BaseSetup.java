@@ -48,8 +48,8 @@ public class BaseSetup {
     @BeforeAll
     public static void beforeAll() {
         System.out.println("beforeAll Base URL: " + baseUrl);
-        System.setProperty("webdriver.chrome.driver", "..\\chrome-driver\\chromedriver.exe");
-        Configuration.browserBinary = "..\\chromium-binary\\chrome-win\\chrome.exe";
+        System.setProperty("webdriver.chrome.driver", "..\\chrome-driver\\chromedriver-win64\\chromedriver.exe");
+        Configuration.browserBinary = "..\\chromium-binary\\chrome-win64\\chrome.exe";
         open(baseUrl);
     }
 

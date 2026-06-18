@@ -1,22 +1,16 @@
 #!/bin/bash
-chromeBinaryUrl="https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/Win_x64%2F1131567%2Fchrome-win.zip?generation=1684876145913156&alt=media"
+chromeBinaryUrl="https://storage.googleapis.com/chrome-for-testing-public/150.0.7871.24/win64/chrome-win64.zip"
 destinationDir="./chromium-binary"
-zipFile="$destinationDir/chrome-win.zip"
+zipFile="$destinationDir/chrome-win64.zip"
+chromeExe="$destinationDir/chrome-win64/chrome.exe"
 
-# 1. Ensure dir exists
 mkdir -p "$destinationDir"
 
-# 2. Check if the unzipped files already exist
-if [ ! -f "$destinationDir/chrome-win/chrome.exe" ]; then
+if [ ! -f "$chromeExe" ]; then
     echo "Downloading Chromium..."
-    # 3. Download
-    curl -L -o "$zipFile" "$chromeBinaryUrl"
-    
-    # 4. Unzip
+    curl --ssl-no-revoke -L -o "$zipFile" "$chromeBinaryUrl"
     unzip -d "$destinationDir" "$zipFile"
-    
-    # 5. Remove zip file
-    rm "$zipFile"
+    rm -f "$zipFile"
 else
     echo "Chromium binary already exists in $destinationDir. Skipping download."
 fi

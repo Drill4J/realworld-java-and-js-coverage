@@ -1,22 +1,16 @@
 #!/bin/bash
-chromeDriverUrl="https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_win32.zip"
+chromeDriverUrl="https://storage.googleapis.com/chrome-for-testing-public/150.0.7871.24/win64/chromedriver-win64.zip"
 destinationDir="./chrome-driver"
-zipFile="$destinationDir/chromedriver_win32.zip"
+zipFile="$destinationDir/chromedriver-win64.zip"
+driverExe="$destinationDir/chromedriver-win64/chromedriver.exe"
 
-# 1. Ensure dir exists
 mkdir -p "$destinationDir"
 
-# 2. Check if the unzipped files already exist
-if [ ! -f "$destinationDir/chromedriver.exe" ]; then
+if [ ! -f "$driverExe" ]; then
     echo "Downloading Chrome Driver..."
-    # 3. Download
-    curl -L -o "$zipFile" "$chromeDriverUrl"
-
-    # 4. Unzip
+    curl --ssl-no-revoke -L -o "$zipFile" "$chromeDriverUrl"
     unzip -d "$destinationDir" "$zipFile"
-
-    # 5. Remove zip file
-    rm "$zipFile"
+    rm -f "$zipFile"
 else
     echo "Chromedriver already exists in $destinationDir. Skipping download."
 fi

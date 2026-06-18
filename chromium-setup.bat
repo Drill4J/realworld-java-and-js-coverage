@@ -1,24 +1,17 @@
 @echo off
 
-set "chromeBinaryUrl=https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/Win_x64%%2F1148119%%2Fchrome-win.zip?generation=1684876145913156&alt=media"
+set "chromeBinaryUrl=https://storage.googleapis.com/chrome-for-testing-public/150.0.7871.24/win64/chrome-win64.zip"
 set "destinationDir=.\chromium-binary"
-set "zipFile=%destinationDir%\chrome-win.zip"
+set "zipFile=%destinationDir%\chrome-win64.zip"
+set "chromeExe=%destinationDir%\chrome-win64\chrome.exe"
 
-REM 1. Ensure dir exists
 if not exist "%destinationDir%" mkdir "%destinationDir%"
 
-REM 2. Check if the unzipped files already exist
-if not exist "%destinationDir%\chrome-win\chrome.exe" (
+if not exist "%chromeExe%" (
     echo Downloading Chromium. Please wait a minute...
-    
-    REM 3. Download
     powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri '%chromeBinaryUrl%' -OutFile '%zipFile%'"
-
-    REM 4. Unzip
-    powershell -Command "Expand-Archive -Path '%zipFile%' -DestinationPath '%destinationDir%'"
-    
-    REM 5. Remove zip file
-    del "%zipFile%"
+    powershell -Command "Expand-Archive -Path '%zipFile%' -DestinationPath '%destinationDir%' -Force"
+    del /Q "%zipFile%" 2>nul
 ) else (
     echo Chromium binary already exists in %destinationDir%. Skipping download.
 )

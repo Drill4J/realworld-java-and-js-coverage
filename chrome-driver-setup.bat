@@ -1,24 +1,17 @@
 @echo off
 
-set "chromeDriverUrl=https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_win32.zip"
+set "chromeDriverUrl=https://storage.googleapis.com/chrome-for-testing-public/150.0.7871.24/win64/chromedriver-win64.zip"
 set "destinationDir=.\chrome-driver"
-set "zipFile=%destinationDir%\chromedriver_win32.zip"
+set "zipFile=%destinationDir%\chromedriver-win64.zip"
+set "driverExe=%destinationDir%\chromedriver-win64\chromedriver.exe"
 
-REM 1. Ensure dir exists
 if not exist "%destinationDir%" mkdir "%destinationDir%"
 
-REM 2. Check if the unzipped files already exist
-if not exist "%destinationDir%\chromedriver.exe" (
+if not exist "%driverExe%" (
     echo Downloading Chrome Driver. Please wait a minute...
-
-    REM 3. Download
     powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri '%chromeDriverUrl%' -OutFile '%zipFile%'"
-
-    REM 4. Unzip
-    powershell -Command "Expand-Archive -Path '%zipFile%' -DestinationPath '%destinationDir%'"
-
-    REM 5. Remove zip file
-    del "%zipFile%"
+    powershell -Command "Expand-Archive -Path '%zipFile%' -DestinationPath '%destinationDir%' -Force"
+    del /Q "%zipFile%" 2>nul
 ) else (
     echo Chromedriver already exists in %destinationDir%. Skipping download.
 )
